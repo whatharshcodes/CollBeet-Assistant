@@ -13,19 +13,7 @@ const app = dialogflow({ debug: true });
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent("Default Welcome Intent", conv => {
-  conv.ask(`Welcome to CollBeet Assistant. How can I help you? .`);
-});
-
-app.intent("Get Next Lecture", async conv => {
-  const userSemester = conv.user.storage.userSemester;
-  const userDepartment = conv.user.storage.userDepartment;
-
-  if(!userSemester || !userDepartment){
-    conv.ask(`Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`);
-  } else {
-    var details = await studentScheduleFunctions.getNextLectureDetails(userSemester,userDepartment);
-    conv.ask(details.message);
-  }
+  conv.ask(`Welcome to CollBeet Assistant. How can I help you?.`);
 });
 
 app.intent("Setup User Details", (conv) => {
@@ -44,6 +32,18 @@ app.intent("Save Semester", async (conv, params) => {
   conv.user.storage.userSemester = sem;
   const userSemester = conv.user.storage.userSemester;
   conv.ask(`Ok your current semester is now set to ${userSemester}. In future if you want to change either your semester or department. Just say, "Setup my user details". User registration is now complete, You can now use CollBeet Assistant as usual.`);
+});
+
+app.intent("Get Next Lecture", async conv => {
+  const userSemester = conv.user.storage.userSemester;
+  const userDepartment = conv.user.storage.userDepartment;
+
+  if(!userSemester || !userDepartment){
+    conv.ask(`Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`);
+  } else {
+    var details = await studentScheduleFunctions.getNextLectureDetails(userSemester,userDepartment);
+    conv.ask(details.message);
+  }
 });
 
 // Set the DialogflowApp object to handle the HTTPS POST request.

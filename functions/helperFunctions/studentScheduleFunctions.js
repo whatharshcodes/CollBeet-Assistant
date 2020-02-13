@@ -2,6 +2,16 @@ const axios = require("axios");
 const apiEndpoints = require("../apiEndpoints");
 const moment = require("moment");
 
+function getTimefromTimestamp(timestamp) {
+  var regex = /\T(.*?)\+/;
+  var regTime = regex.exec(timestamp)[1];
+
+  var timeArr = regTime.split(":");
+  var onlySortedTime = timeArr.slice(0, -1).join(":");
+
+  return onlySortedTime;
+}
+
 const getNextLectureDetails = async (userSemester, userDepartment) =>
   await axios
     .get(apiEndpoints.studentScheduleUrl)
@@ -48,7 +58,13 @@ const getNextLectureDetails = async (userSemester, userDepartment) =>
         if (filteredWokrHours.length > 0) {
           const arr = filteredWokrHours[0];
 
-          const { lectureName, teacherName, breakValue } = arr;
+          const {
+            lectureName,
+            teacherName,
+            breakValue,
+            startTime,
+            endTime
+          } = arr;
 
           if (breakValue == true) {
             return {
@@ -56,9 +72,12 @@ const getNextLectureDetails = async (userSemester, userDepartment) =>
               message: `You have a break coming up next.`
             };
           } else {
+            var stime = getTimefromTimestamp(startTime);
+            var etime = getTimefromTimestamp(endTime);
+
             return {
               success: true,
-              message: `You have a ${lectureName} Lecture coming up next. Lecture will be taken by ${teacherName}.`
+              message: `You have a ${lectureName} Lecture coming up next from ${stime} to ${etime}. Lecture will be taken by ${teacherName}. `
             };
           }
         } else {
