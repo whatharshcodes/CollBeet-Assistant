@@ -2,7 +2,7 @@ const axios = require("axios");
 const apiEndpoints = require("../apiEndpoints");
 const moment = require("moment");
 
-function getTimefromTimestamp(timestamp) {
+const getTimefromTimestamp = (timestamp) => {
   var regex = /\T(.*?)\+/;
   var regTime = regex.exec(timestamp)[1];
 
@@ -69,7 +69,8 @@ const getNextLectureDetails = async (userSemester, userDepartment) =>
           if (breakValue == true) {
             return {
               success: true,
-              message: `You have a break coming up next.`
+              message: `You have a break coming up next.`,
+              lectures: filteredWokrHours
             };
           } else {
             var stime = getTimefromTimestamp(startTime);
@@ -77,7 +78,8 @@ const getNextLectureDetails = async (userSemester, userDepartment) =>
 
             return {
               success: true,
-              message: `You have a ${lectureName} Lecture coming up next from ${stime} to ${etime}. Lecture will be taken by ${teacherName}. `
+              message: `You have a ${lectureName} Lecture coming up next from ${stime} to ${etime}. Lecture will be taken by ${teacherName}. `,
+              lectures: filteredWokrHours
             };
           }
         } else {
@@ -103,3 +105,4 @@ const getNextLectureDetails = async (userSemester, userDepartment) =>
     });
 
 module.exports.getNextLectureDetails = getNextLectureDetails;
+module.exports.getTimefromTimestamp = getTimefromTimestamp;

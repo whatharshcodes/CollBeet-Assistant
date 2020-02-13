@@ -2,7 +2,7 @@
 
 // Import the Dialogflow module and response creation dependencies
 // from the Actions on Google client library.
-const { dialogflow } = require("actions-on-google");
+const { dialogflow, Table } = require("actions-on-google");
 
 // Import the firebase-functions package for deployment.
 const functions = require("firebase-functions");
@@ -16,33 +16,106 @@ app.intent("Default Welcome Intent", conv => {
   conv.ask(`Welcome to CollBeet Assistant. How can I help you?.`);
 });
 
-app.intent("Setup User Details", (conv) => {
-  conv.ask(`I will now attempt to register your account details. Can you start by telling me which department you are currently studying in?. For example if you are studying in "Information Technology Department". You can say, "I am currently studying in Information Technology".`);
+app.intent("Setup User Details", conv => {
+  conv.ask(
+    `I will now attempt to register your account details. Can you start by telling me which department you are currently studying in?. For example if you are studying in "Information Technology Department". You can say, "I am currently studying in Information Technology".`
+  );
 });
 
 app.intent("Save Department", async (conv, params) => {
   const dept = params.department;
   conv.user.storage.userDepartment = dept;
   const userDepartment = conv.user.storage.userDepartment;
-  conv.ask(`Ok current department is now set successfully. Department reference code is ${userDepartment}. Can you now tell me which semester you are currently studying in?. For example if you are studying in "4th" semester. You can say, "I am currently studying in 4th Semester".`);
+  conv.ask(
+    `Ok current department is now set successfully. Department reference code is ${userDepartment}. Can you now tell me which semester you are currently studying in?. For example if you are studying in "4th" semester. You can say, "I am currently studying in 4th Semester".`
+  );
 });
 
 app.intent("Save Semester", async (conv, params) => {
   const sem = params.semester;
   conv.user.storage.userSemester = sem;
   const userSemester = conv.user.storage.userSemester;
-  conv.ask(`Ok your current semester is now set to ${userSemester}. In future if you want to change either your semester or department. Just say, "Setup my user details". User registration is now complete, You can now use CollBeet Assistant as usual.`);
+  conv.ask(
+    `Ok your current semester is now set to ${userSemester}. In future if you want to change either your semester or department. Just say, "Setup my user details". User registration is now complete, You can now use CollBeet Assistant as usual.`
+  );
 });
 
 app.intent("Get Next Lecture", async conv => {
   const userSemester = conv.user.storage.userSemester;
   const userDepartment = conv.user.storage.userDepartment;
 
-  if(!userSemester || !userDepartment){
-    conv.ask(`Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`);
+  if (!userSemester || !userDepartment) {
+    conv.ask(
+      `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+    );
   } else {
-    var details = await studentScheduleFunctions.getNextLectureDetails(userSemester,userDepartment);
+    var details = await studentScheduleFunctions.getNextLectureDetails(
+      userSemester,
+      userDepartment
+    );
+
+    if (!conv.screen) {
+      conv.ask(details.message);
+      return;
+    }
+
     conv.ask(details.message);
+
+    var dict = details.lectures;
+
+    if (dict) {
+      var rowarr = [];
+
+      dict.forEach(myFunc);
+
+      function myFunc(item) {
+        if (item.breakValue == true) {
+          const l = "Break";
+          const t = "Time";
+          const s1 = item.startTime;
+          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          const e1 = item.endTime;
+          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+
+          rowarr.push([l, t, s, e]);
+        } else {
+          const l = item.lectureName;
+          const t = item.teacherName;
+          const s1 = item.startTime;
+          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          const e1 = item.endTime;
+          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+
+          rowarr.push([l, t, s, e]);
+        }
+      }
+
+      conv.ask(
+        new Table({
+          title: "Time Table",
+          subtitle: "You have this lectures coming up next.",
+          columns: [
+            {
+              header: "Subject Name",
+              align: "LEADING"
+            },
+            {
+              header: "Teacher Name",
+              align: "LEADING"
+            },
+            {
+              header: "Start Time",
+              align: "LEADING"
+            },
+            {
+              header: "End Time",
+              align: "LEADING"
+            }
+          ],
+          rows: rowarr
+        })
+      );
+    }
   }
 });
 
