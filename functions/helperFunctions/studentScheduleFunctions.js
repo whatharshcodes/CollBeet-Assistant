@@ -152,7 +152,8 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
               );
             } else {
               msgs.push(
-                `Lecture no: ${i + 1} is a break from ${stime} to ${etime}. <break time=\"0.7\" />`
+                `Lecture no: ${i +
+                  1} is a break from ${stime} to ${etime}. <break time=\"0.7\" />`
               );
             }
           }
@@ -187,7 +188,7 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
       };
     });
 
-    const getAllTomorrowsLectures = async (userSemester, userDepartment) =>
+const getAllTomorrowsLectures = async (userSemester, userDepartment) =>
   await axios
     .get(apiEndpoints.studentScheduleUrl)
     .then(res => res.data)
@@ -236,7 +237,8 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
               );
             } else {
               msgs.push(
-                `Lecture no: ${i + 1} is a break from ${stime} to ${etime}. <break time=\"0.7\" />`
+                `Lecture no: ${i +
+                  1} is a break from ${stime} to ${etime}. <break time=\"0.7\" />`
               );
             }
           }
@@ -271,7 +273,50 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
       };
     });
 
+const getMessMeal = async mealType =>
+  await axios
+    .get(apiEndpoints.messScheduleUrl)
+    .then(res => res.data)
+    .then(res => {
+      const data = res.data;
+      if (data) {
+        let d = new Date();
+        let n = d.getDay();
+
+        const type = mealType;
+
+        const receivedMealData = data.filter(function(i) {
+          return i.dayid == n && i.type == type;
+        });
+
+        if (receivedMealData.length > 0) {
+          return {
+            success: true,
+            message: `In ${type} today, we are serving ${receivedMealData[0].fooditems}`
+          };
+        } else {
+          return {
+            success: false,
+            message: `Sorry but I don't know what's in ${type} today.`
+          };
+        }
+      } else {
+        return {
+          success: false,
+          message: `Sorry but I am unable to find your requested meal.`
+        };
+      }
+    })
+    .catch(err => {
+      console.log(err.message);
+      return {
+        success: false,
+        message: `Sorry but I am unable to find any mess schedule.`
+      };
+    });
+
 module.exports.getNextLectureDetails = getNextLectureDetails;
 module.exports.getTimefromTimestamp = getTimefromTimestamp;
 module.exports.getAllTodaysLectures = getAllTodaysLectures;
 module.exports.getAllTomorrowsLectures = getAllTomorrowsLectures;
+module.exports.getMessMeal = getMessMeal;

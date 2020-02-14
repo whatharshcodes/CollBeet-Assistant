@@ -290,5 +290,13 @@ app.intent("List All Tomorrow's Lectures", async conv => {
   }
 });
 
+app.intent("Get Mess Meal", async (conv, params) => {
+  const mealType = params.mealtypes;
+
+  var details = await studentScheduleFunctions.getMessMeal(mealType);
+
+  conv.ask(details.message);
+});
+
 // Set the DialogflowApp object to handle the HTTPS POST request.
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
