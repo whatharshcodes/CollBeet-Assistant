@@ -205,5 +205,90 @@ app.intent("List All Today's Lectures", async conv => {
   }
 });
 
+app.intent("List All Tomorrow's Lectures", async conv => {
+  const userSemester = conv.user.storage.userSemester;
+  const userDepartment = conv.user.storage.userDepartment;
+
+  if (!userSemester || !userDepartment) {
+    conv.ask(
+      `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+    );
+  } else {
+    var details = await studentScheduleFunctions.getAllTomorrowsLectures(
+      userSemester,
+      userDepartment
+    );
+
+    if (!conv.screen) {
+      if (details.fullmessage) {
+        conv.ask(details.fullmessage);
+        return;
+      } else {
+        conv.ask(details.message);
+        return;
+      }
+    }
+
+    conv.ask(details.message);
+
+    var dict = details.lectures;
+    console.log("THIS IS DICT " + dict);
+
+    if (dict) {
+      var rowarr = [];
+
+      dict.forEach(myFunc);
+
+      function myFunc(item) {
+        if (item.breakValue == true) {
+          const l = "Break";
+          const t = "-";
+          const s1 = item.startTime;
+          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          const e1 = item.endTime;
+          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+
+          rowarr.push([l, t, s, e]);
+        } else {
+          const l = item.lectureName;
+          const t = item.teacherName;
+          const s1 = item.startTime;
+          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          const e1 = item.endTime;
+          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+
+          rowarr.push([l, t, s, e]);
+        }
+      }
+
+      conv.ask(
+        new Table({
+          title: "Tomorrow's Lectures",
+          subtitle: "You have this lectures Tomorrow.",
+          columns: [
+            {
+              header: "Subject Name",
+              align: "LEADING"
+            },
+            {
+              header: "Teacher Name",
+              align: "LEADING"
+            },
+            {
+              header: "Start Time",
+              align: "LEADING"
+            },
+            {
+              header: "End Time",
+              align: "LEADING"
+            }
+          ],
+          rows: rowarr
+        })
+      );
+    }
+  }
+});
+
 // Set the DialogflowApp object to handle the HTTPS POST request.
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);

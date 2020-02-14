@@ -187,6 +187,91 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
       };
     });
 
+    const getAllTomorrowsLectures = async (userSemester, userDepartment) =>
+  await axios
+    .get(apiEndpoints.studentScheduleUrl)
+    .then(res => res.data)
+    .then(res => {
+      const data = res.data;
+
+      if (data) {
+        let d = new Date();
+        let p = d.getDay();
+        let n = p + 1;
+
+        let dept = userDepartment;
+        let semcode = userSemester;
+
+        const allLectures = data
+          .filter(function(i) {
+            return i.deptcode === dept;
+          })
+          .map(function(i) {
+            return i.activesem;
+          })[0]
+          .filter(function(i) {
+            return i.semid == semcode;
+          })
+          .map(function(i) {
+            return i.schedule;
+          })[0]
+          .filter(function(i) {
+            return i.dayid == n;
+          });
+
+        if (allLectures.length > 1) {
+          const msgs = [];
+
+          for (let i = 0; i <= allLectures.length - 1; i++) {
+            var stime = getTimefromTimestamp(allLectures[i].startTime);
+            var etime = getTimefromTimestamp(allLectures[i].endTime);
+
+            if (allLectures[i].breakValue == false) {
+              msgs.push(
+                `Lecture no: ${i + 1}. Lecture Name: ${
+                  allLectures[i].lectureName
+                }, which will be taken by ${
+                  allLectures[i].teacherName
+                }. Lecture is from ${stime} to ${etime} <break time=\"0.7\" />`
+              );
+            } else {
+              msgs.push(
+                `Lecture no: ${i + 1} is a break from ${stime} to ${etime}. <break time=\"0.7\" />`
+              );
+            }
+          }
+
+          const responseString = msgs.join(". ");
+
+          return {
+            success: true,
+            fullmessage: `<speak> You have ${allLectures.length} lectures tomorrow. ${responseString} </speak>`,
+            message: `You have following ${allLectures.length} lectures tomorrow.`,
+            lectures: allLectures
+          };
+        } else {
+          return {
+            success: false,
+            message: `Sorry but I am unable to find any lectures for your request. Are you sure it's not a holiday ?`
+          };
+        }
+      } else {
+        console.log("No Lecture Added");
+        return {
+          success: false,
+          message: `Sorry but I am unable to find any lectures for your request.`
+        };
+      }
+    })
+    .catch(err => {
+      console.log(err.message);
+      return {
+        success: false,
+        message: `Sorry but I am unable to find any lectures for your request.`
+      };
+    });
+
 module.exports.getNextLectureDetails = getNextLectureDetails;
 module.exports.getTimefromTimestamp = getTimefromTimestamp;
 module.exports.getAllTodaysLectures = getAllTodaysLectures;
+module.exports.getAllTomorrowsLectures = getAllTomorrowsLectures;
