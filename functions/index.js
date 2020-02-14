@@ -349,5 +349,56 @@ app.intent("Get All Today's Mess Meal", async conv => {
   }
 });
 
+app.intent("Get All Tomorrow's Mess Meal", async conv => {
+  var details = await studentScheduleFunctions.getAllTomorrowsMessMeal();
+
+  if (!conv.screen) {
+    if (details.fullmessage) {
+      conv.ask(details.fullmessage);
+      return;
+    } else {
+      conv.ask(details.message);
+      return;
+    }
+  }
+
+  conv.ask(details.message);
+
+  var dict = details.mealsarr;
+  console.log("THIS IS DICT " + dict);
+
+  if (dict) {
+    var rowarr = [];
+
+    dict.forEach(myFunc);
+
+    function myFunc(item) {
+      const t = item.type;
+      const tC = t.charAt(0).toUpperCase() + t.slice(1);
+
+      const f = item.fooditems;
+
+      rowarr.push([tC, f]);
+    }
+    conv.ask(
+      new Table({
+        title: "Tomorrow's Meal Schedule",
+        subtitle: "We are serving following dishes tomorrow",
+        columns: [
+          {
+            header: "Meal Time",
+            align: "LEADING"
+          },
+          {
+            header: "Dishes",
+            align: "LEADING"
+          }
+        ],
+        rows: rowarr
+      })
+    );
+  }
+});
+
 // Set the DialogflowApp object to handle the HTTPS POST request.
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
