@@ -17,8 +17,10 @@ app.intent("Default Welcome Intent", conv => {
 });
 
 app.intent("Setup User Details", conv => {
+  conv.ask(`I will now attempt to register your account details.`);
+
   conv.ask(
-    `I will now attempt to register your account details. Can you start by telling me which department you are currently studying in?. For example if you are studying in "Information Technology Department". You can say, "I am currently studying in Information Technology".`
+    `Can you start by telling me which department you are currently studying in?. For example if you are studying in "Information Technology Department". Just say, "I am currently studying in Information Technology".`
   );
 });
 
@@ -27,7 +29,11 @@ app.intent("Save Department", async (conv, params) => {
   conv.user.storage.userDepartment = dept;
   const userDepartment = conv.user.storage.userDepartment;
   conv.ask(
-    `Ok current department is now set successfully. Department reference code is ${userDepartment}. Can you now tell me which semester you are currently studying in?. For example if you are studying in "4th" semester. You can say, "I am currently studying in 4th Semester".`
+    `Ok current department is now set successfully. Department reference code is ${userDepartment}.`
+  );
+
+  conv.ask(
+    `Can you now tell me which semester you are currently studying in?. For example if you are studying in "4th" semester. You can say, "I am currently studying in 4th Semester".`
   );
 });
 
@@ -36,8 +42,10 @@ app.intent("Save Semester", async (conv, params) => {
   conv.user.storage.userSemester = sem;
   const userSemester = conv.user.storage.userSemester;
   conv.ask(
-    `Ok your current semester is now set to ${userSemester}. In future if you want to change either your semester or department. Just say, "Setup my user details". User registration is now complete, You can now use CollBeet Assistant as usual.`
+    `Ok your current semester is now set to ${userSemester}. User registration is now complete. In future if you want to change either your semester or department. Just say, "Setup my user details".`
   );
+
+  conv.ask(`<speak><break time="0.7" />So how can I help you today?</speak>`);
 });
 
 app.intent("Get Next Lecture", async conv => {
@@ -56,6 +64,9 @@ app.intent("Get Next Lecture", async conv => {
 
     if (!conv.screen) {
       conv.ask(details.message);
+      conv.ask(
+        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+      );
       return;
     }
 
@@ -117,6 +128,10 @@ app.intent("Get Next Lecture", async conv => {
         })
       );
     }
+
+    conv.ask(
+      `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+    );
   }
 });
 
@@ -137,9 +152,15 @@ app.intent("List All Today's Lectures", async conv => {
     if (!conv.screen) {
       if (details.fullmessage) {
         conv.ask(details.fullmessage);
+        conv.ask(
+          `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        );
         return;
       } else {
         conv.ask(details.message);
+        conv.ask(
+          `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        );
         return;
       }
     }
@@ -202,6 +223,9 @@ app.intent("List All Today's Lectures", async conv => {
         })
       );
     }
+    conv.ask(
+      `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+    );
   }
 });
 
@@ -222,9 +246,15 @@ app.intent("List All Tomorrow's Lectures", async conv => {
     if (!conv.screen) {
       if (details.fullmessage) {
         conv.ask(details.fullmessage);
+        conv.ask(
+          `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        );
         return;
       } else {
         conv.ask(details.message);
+        conv.ask(
+          `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        );
         return;
       }
     }
@@ -287,6 +317,9 @@ app.intent("List All Tomorrow's Lectures", async conv => {
         })
       );
     }
+    conv.ask(
+      `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+    );
   }
 });
 
@@ -296,6 +329,10 @@ app.intent("Get Mess Meal", async (conv, params) => {
   var details = await studentScheduleFunctions.getMessMeal(mealType);
 
   conv.ask(details.message);
+
+  conv.ask(
+    `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+  );
 });
 
 app.intent("Get All Today's Mess Meal", async conv => {
@@ -304,9 +341,15 @@ app.intent("Get All Today's Mess Meal", async conv => {
   if (!conv.screen) {
     if (details.fullmessage) {
       conv.ask(details.fullmessage);
+      conv.ask(
+        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+      );
       return;
     } else {
       conv.ask(details.message);
+      conv.ask(
+        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+      );
       return;
     }
   }
@@ -347,6 +390,9 @@ app.intent("Get All Today's Mess Meal", async conv => {
       })
     );
   }
+  conv.ask(
+    `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+  );
 });
 
 app.intent("Get All Tomorrow's Mess Meal", async conv => {
@@ -355,9 +401,15 @@ app.intent("Get All Tomorrow's Mess Meal", async conv => {
   if (!conv.screen) {
     if (details.fullmessage) {
       conv.ask(details.fullmessage);
+      conv.ask(
+        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+      );
       return;
     } else {
       conv.ask(details.message);
+      conv.ask(
+        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+      );
       return;
     }
   }
@@ -398,6 +450,9 @@ app.intent("Get All Tomorrow's Mess Meal", async conv => {
       })
     );
   }
+  conv.ask(
+    `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+  );
 });
 
 // Set the DialogflowApp object to handle the HTTPS POST request.
