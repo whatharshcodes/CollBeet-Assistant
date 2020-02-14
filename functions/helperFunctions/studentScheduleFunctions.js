@@ -135,7 +135,7 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
             return i.dayid == n;
           });
 
-        if (allTodaysLectures.length > 1) {
+        if (allTodaysLectures.length > 0) {
           const msgs = [];
 
           for (let i = 0; i <= allTodaysLectures.length - 1; i++) {
@@ -161,8 +161,8 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
 
           return {
             success: true,
-            fullmessage: `<speak> You have ${allTodaysLectures.length} lectures today. ${responseString} </speak>`,
-            message: `You have following ${allTodaysLectures.length} lectures today.`,
+            fullmessage: `<speak> You have ${allTodaysLectures.length} lecture(s) today. ${responseString} </speak>`,
+            message: `You have following ${allTodaysLectures.length} lecture(s) today.`,
             lectures: allTodaysLectures
           };
         } else {
@@ -219,7 +219,7 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
             return i.dayid == n;
           });
 
-        if (allLectures.length > 1) {
+        if (allLectures.length > 0) {
           const msgs = [];
 
           for (let i = 0; i <= allLectures.length - 1; i++) {
@@ -245,8 +245,8 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
 
           return {
             success: true,
-            fullmessage: `<speak> You have ${allLectures.length} lectures tomorrow. ${responseString} </speak>`,
-            message: `You have following ${allLectures.length} lectures tomorrow.`,
+            fullmessage: `<speak> You have ${allLectures.length} lecture(s) tomorrow. ${responseString} </speak>`,
+            message: `You have following ${allLectures.length} lecture(s) tomorrow.`,
             lectures: allLectures
           };
         } else {
