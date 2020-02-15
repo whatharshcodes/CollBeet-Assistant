@@ -10,6 +10,7 @@ const studentScheduleFunctions = require("./helperFunctions/studentScheduleFunct
 const messScheduleFunctions = require("./helperFunctions/messScheduleFunctions");
 const generalFunctions = require("./helperFunctions/generalFunctions");
 const announcementFunctions = require("./helperFunctions/announcementFunctions");
+const locationsFunctions = require("./helperFunctions/locationsFunctions");
 
 // Instantiate the Dialogflow client.
 const app = dialogflow({ debug: true });
@@ -501,6 +502,19 @@ app.intent("Get All Announcements", async conv => {
       })
     );
   }
+  conv.ask(
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+});
+
+
+app.intent("Get Staffroom Location", async (conv, params) => {
+  const userDepartment = params.department;
+
+  var details = await locationsFunctions.getStaffroomLocation(userDepartment);
+
+  conv.ask(details.message);
+
   conv.ask(
     `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
   );
