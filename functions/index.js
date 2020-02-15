@@ -457,5 +457,58 @@ app.intent("Get All Tomorrow's Mess Meal", async conv => {
   );
 });
 
+app.intent("Get All Announcements", async conv => {
+  var details = await studentScheduleFunctions.getAllAnnouncments();
+
+  if (!conv.screen) {
+    if (details.fullmessage) {
+      conv.ask(details.fullmessage);
+      conv.ask(
+        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+      );
+      return;
+    } else {
+      conv.ask(details.message);
+      conv.ask(
+        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+      );
+      return;
+    }
+  }
+
+  conv.ask(details.message);
+
+  var dict = details.announcementarr;
+  console.log("THIS IS DICT " + dict);
+
+  if (dict) {
+    var rowarr = [];
+
+    dict.forEach(myFunc);
+
+    function myFunc(item) {
+      const m = item.message;
+
+      rowarr.push([m]);
+    }
+    conv.ask(
+      new Table({
+        title: "Daily Announcements",
+        subtitle: "This are all the announcements for today",
+        columns: [
+          {
+            header: "Announcements",
+            align: "LEADING"
+          },
+        ],
+        rows: rowarr
+      })
+    );
+  }
+  conv.ask(
+    `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+  );
+});
+
 // Set the DialogflowApp object to handle the HTTPS POST request.
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
