@@ -2,6 +2,8 @@ const axios = require("axios");
 const apiEndpoints = require("../apiEndpoints");
 const moment = require("moment");
 
+const endPhrasesModule = require("../resources/endPhrases.js");
+
 const getTimefromTimestamp = timestamp => {
   var regex = /\T(.*?)\+/;
   var regTime = regex.exec(timestamp)[1];
@@ -426,6 +428,20 @@ const getAllTomorrowsMessMeal = async () =>
       };
     });
 
+const getRandomNumber = max => {
+  return Math.floor(Math.random() * max);
+};
+
+const radomEndPhrase = () => {
+  const endPhrasesArr = endPhrasesModule.endPhrasesArr;
+
+  const index = getRandomNumber(endPhrasesArr.length);
+
+  const phrase = endPhrasesArr[index];
+
+  return phrase;
+};
+
 module.exports.getNextLectureDetails = getNextLectureDetails;
 module.exports.getTimefromTimestamp = getTimefromTimestamp;
 module.exports.getAllTodaysLectures = getAllTodaysLectures;
@@ -433,3 +449,5 @@ module.exports.getAllTomorrowsLectures = getAllTomorrowsLectures;
 module.exports.getMessMeal = getMessMeal;
 module.exports.getAllTodaysMessMeal = getAllTodaysMessMeal;
 module.exports.getAllTomorrowsMessMeal = getAllTomorrowsMessMeal;
+module.exports.getRandomNumber = getRandomNumber;
+module.exports.radomEndPhrase = radomEndPhrase;

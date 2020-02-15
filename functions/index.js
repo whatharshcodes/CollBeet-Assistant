@@ -8,6 +8,7 @@ const { dialogflow, Table } = require("actions-on-google");
 const functions = require("firebase-functions");
 const studentScheduleFunctions = require("./helperFunctions/studentScheduleFunctions");
 
+
 // Instantiate the Dialogflow client.
 const app = dialogflow({ debug: true });
 
@@ -64,8 +65,9 @@ app.intent("Get Next Lecture", async conv => {
 
     if (!conv.screen) {
       conv.ask(details.message);
+
       conv.ask(
-        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
       );
       return;
     }
@@ -130,7 +132,7 @@ app.intent("Get Next Lecture", async conv => {
     }
 
     conv.ask(
-      `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+      `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
     );
   }
 });
@@ -153,13 +155,13 @@ app.intent("List All Today's Lectures", async conv => {
       if (details.fullmessage) {
         conv.ask(details.fullmessage);
         conv.ask(
-          `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+          `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
         );
         return;
       } else {
         conv.ask(details.message);
         conv.ask(
-          `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+          `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
         );
         return;
       }
@@ -224,7 +226,7 @@ app.intent("List All Today's Lectures", async conv => {
       );
     }
     conv.ask(
-      `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+      `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
     );
   }
 });
@@ -247,13 +249,13 @@ app.intent("List All Tomorrow's Lectures", async conv => {
       if (details.fullmessage) {
         conv.ask(details.fullmessage);
         conv.ask(
-          `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+          `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
         );
         return;
       } else {
         conv.ask(details.message);
         conv.ask(
-          `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+          `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
         );
         return;
       }
@@ -318,7 +320,7 @@ app.intent("List All Tomorrow's Lectures", async conv => {
       );
     }
     conv.ask(
-      `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+      `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
     );
   }
 });
@@ -331,7 +333,7 @@ app.intent("Get Mess Meal", async (conv, params) => {
   conv.ask(details.message);
 
   conv.ask(
-    `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+    `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
   );
 });
 
@@ -342,13 +344,13 @@ app.intent("Get All Today's Mess Meal", async conv => {
     if (details.fullmessage) {
       conv.ask(details.fullmessage);
       conv.ask(
-        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
       );
       return;
     } else {
       conv.ask(details.message);
       conv.ask(
-        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
       );
       return;
     }
@@ -391,7 +393,7 @@ app.intent("Get All Today's Mess Meal", async conv => {
     );
   }
   conv.ask(
-    `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+    `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
   );
 });
 
@@ -402,13 +404,13 @@ app.intent("Get All Tomorrow's Mess Meal", async conv => {
     if (details.fullmessage) {
       conv.ask(details.fullmessage);
       conv.ask(
-        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
       );
       return;
     } else {
       conv.ask(details.message);
       conv.ask(
-        `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
       );
       return;
     }
@@ -451,7 +453,7 @@ app.intent("Get All Tomorrow's Mess Meal", async conv => {
     );
   }
   conv.ask(
-    `<speak><break time=\"0.7\" />Anything else I can help you with ?</speak>`
+    `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
   );
 });
 
