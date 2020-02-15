@@ -7,7 +7,9 @@ const { dialogflow, Table } = require("actions-on-google");
 // Import the firebase-functions package for deployment.
 const functions = require("firebase-functions");
 const studentScheduleFunctions = require("./helperFunctions/studentScheduleFunctions");
-
+const messScheduleFunctions = require("./helperFunctions/messScheduleFunctions");
+const generalFunctions = require("./helperFunctions/generalFunctions");
+const announcementFunctions = require("./helperFunctions/announcementFunctions");
 
 // Instantiate the Dialogflow client.
 const app = dialogflow({ debug: true });
@@ -67,7 +69,7 @@ app.intent("Get Next Lecture", async conv => {
       conv.ask(details.message);
 
       conv.ask(
-        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+        `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
       );
       return;
     }
@@ -87,18 +89,18 @@ app.intent("Get Next Lecture", async conv => {
           const l = "Break";
           const t = "-";
           const s1 = item.startTime;
-          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          var s = generalFunctions.getTimefromTimestamp(s1);
           const e1 = item.endTime;
-          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+          var e = generalFunctions.getTimefromTimestamp(e1);
 
           rowarr.push([l, t, s, e]);
         } else {
           const l = item.lectureName;
           const t = item.teacherName;
           const s1 = item.startTime;
-          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          var s = generalFunctions.getTimefromTimestamp(s1);
           const e1 = item.endTime;
-          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+          var e = generalFunctions.getTimefromTimestamp(e1);
 
           rowarr.push([l, t, s, e]);
         }
@@ -132,7 +134,7 @@ app.intent("Get Next Lecture", async conv => {
     }
 
     conv.ask(
-      `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
   }
 });
@@ -155,13 +157,13 @@ app.intent("List All Today's Lectures", async conv => {
       if (details.fullmessage) {
         conv.ask(details.fullmessage);
         conv.ask(
-          `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+          `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
         );
         return;
       } else {
         conv.ask(details.message);
         conv.ask(
-          `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+          `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
         );
         return;
       }
@@ -182,18 +184,18 @@ app.intent("List All Today's Lectures", async conv => {
           const l = "Break";
           const t = "-";
           const s1 = item.startTime;
-          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          var s = generalFunctions.getTimefromTimestamp(s1);
           const e1 = item.endTime;
-          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+          var e = generalFunctions.getTimefromTimestamp(e1);
 
           rowarr.push([l, t, s, e]);
         } else {
           const l = item.lectureName;
           const t = item.teacherName;
           const s1 = item.startTime;
-          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          var s = generalFunctions.getTimefromTimestamp(s1);
           const e1 = item.endTime;
-          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+          var e = generalFunctions.getTimefromTimestamp(e1);
 
           rowarr.push([l, t, s, e]);
         }
@@ -226,7 +228,7 @@ app.intent("List All Today's Lectures", async conv => {
       );
     }
     conv.ask(
-      `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
   }
 });
@@ -249,13 +251,13 @@ app.intent("List All Tomorrow's Lectures", async conv => {
       if (details.fullmessage) {
         conv.ask(details.fullmessage);
         conv.ask(
-          `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+          `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
         );
         return;
       } else {
         conv.ask(details.message);
         conv.ask(
-          `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+          `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
         );
         return;
       }
@@ -276,18 +278,18 @@ app.intent("List All Tomorrow's Lectures", async conv => {
           const l = "Break";
           const t = "-";
           const s1 = item.startTime;
-          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          var s = generalFunctions.getTimefromTimestamp(s1);
           const e1 = item.endTime;
-          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+          var e = generalFunctions.getTimefromTimestamp(e1);
 
           rowarr.push([l, t, s, e]);
         } else {
           const l = item.lectureName;
           const t = item.teacherName;
           const s1 = item.startTime;
-          var s = studentScheduleFunctions.getTimefromTimestamp(s1);
+          var s = generalFunctions.getTimefromTimestamp(s1);
           const e1 = item.endTime;
-          var e = studentScheduleFunctions.getTimefromTimestamp(e1);
+          var e = generalFunctions.getTimefromTimestamp(e1);
 
           rowarr.push([l, t, s, e]);
         }
@@ -320,7 +322,7 @@ app.intent("List All Tomorrow's Lectures", async conv => {
       );
     }
     conv.ask(
-      `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
   }
 });
@@ -328,29 +330,29 @@ app.intent("List All Tomorrow's Lectures", async conv => {
 app.intent("Get Mess Meal", async (conv, params) => {
   const mealType = params.mealtypes;
 
-  var details = await studentScheduleFunctions.getMessMeal(mealType);
+  var details = await messScheduleFunctions.getMessMeal(mealType);
 
   conv.ask(details.message);
 
   conv.ask(
-    `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
   );
 });
 
 app.intent("Get All Today's Mess Meal", async conv => {
-  var details = await studentScheduleFunctions.getAllTodaysMessMeal();
+  var details = await messScheduleFunctions.getAllTodaysMessMeal();
 
   if (!conv.screen) {
     if (details.fullmessage) {
       conv.ask(details.fullmessage);
       conv.ask(
-        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+        `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
       );
       return;
     } else {
       conv.ask(details.message);
       conv.ask(
-        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+        `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
       );
       return;
     }
@@ -393,24 +395,24 @@ app.intent("Get All Today's Mess Meal", async conv => {
     );
   }
   conv.ask(
-    `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
   );
 });
 
 app.intent("Get All Tomorrow's Mess Meal", async conv => {
-  var details = await studentScheduleFunctions.getAllTomorrowsMessMeal();
+  var details = await messScheduleFunctions.getAllTomorrowsMessMeal();
 
   if (!conv.screen) {
     if (details.fullmessage) {
       conv.ask(details.fullmessage);
       conv.ask(
-        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+        `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
       );
       return;
     } else {
       conv.ask(details.message);
       conv.ask(
-        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+        `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
       );
       return;
     }
@@ -453,24 +455,24 @@ app.intent("Get All Tomorrow's Mess Meal", async conv => {
     );
   }
   conv.ask(
-    `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
   );
 });
 
 app.intent("Get All Announcements", async conv => {
-  var details = await studentScheduleFunctions.getAllAnnouncments();
+  var details = await announcementFunctions.getAllAnnouncements();
 
   if (!conv.screen) {
     if (details.fullmessage) {
       conv.ask(details.fullmessage);
       conv.ask(
-        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+        `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
       );
       return;
     } else {
       conv.ask(details.message);
       conv.ask(
-        `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+        `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
       );
       return;
     }
@@ -506,7 +508,7 @@ app.intent("Get All Announcements", async conv => {
     );
   }
   conv.ask(
-    `<speak><break time=\"0.7\" />${studentScheduleFunctions.radomEndPhrase()}</speak>`
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
   );
 });
 
