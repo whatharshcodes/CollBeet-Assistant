@@ -77,7 +77,6 @@ app.intent("Get Next Lecture", async conv => {
     conv.ask(details.message);
 
     var dict = details.lectures;
-    console.log("THIS IS DICT " + dict);
 
     if (dict) {
       var rowarr = [];
@@ -172,7 +171,6 @@ app.intent("List All Today's Lectures", async conv => {
     conv.ask(details.message);
 
     var dict = details.lectures;
-    console.log("THIS IS DICT " + dict);
 
     if (dict) {
       var rowarr = [];
@@ -266,7 +264,6 @@ app.intent("List All Tomorrow's Lectures", async conv => {
     conv.ask(details.message);
 
     var dict = details.lectures;
-    console.log("THIS IS DICT " + dict);
 
     if (dict) {
       var rowarr = [];
@@ -361,7 +358,6 @@ app.intent("Get All Today's Mess Meal", async conv => {
   conv.ask(details.message);
 
   var dict = details.mealsarr;
-  console.log("THIS IS DICT " + dict);
 
   if (dict) {
     var rowarr = [];
@@ -421,7 +417,6 @@ app.intent("Get All Tomorrow's Mess Meal", async conv => {
   conv.ask(details.message);
 
   var dict = details.mealsarr;
-  console.log("THIS IS DICT " + dict);
 
   if (dict) {
     var rowarr = [];
@@ -481,7 +476,6 @@ app.intent("Get All Announcements", async conv => {
   conv.ask(details.message);
 
   var dict = details.announcementarr;
-  console.log("THIS IS DICT " + dict);
 
   if (dict) {
     var rowarr = [];

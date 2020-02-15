@@ -81,7 +81,6 @@ const getNextLectureDetails = async (userSemester, userDepartment) =>
           };
         }
       } else {
-        console.log("No Lecture Added");
         return {
           success: false,
           message: `Sorry but I am unable to find any lectures for your request`
@@ -169,7 +168,6 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
           };
         }
       } else {
-        console.log("No Lecture Added");
         return {
           success: false,
           message: `Sorry but I am unable to find any lectures for your request.`
@@ -258,7 +256,6 @@ const getAllTomorrowsLectures = async (userSemester, userDepartment) =>
           };
         }
       } else {
-        console.log("No Lecture Added");
         return {
           success: false,
           message: `Sorry but I am unable to find any lectures for your request.`

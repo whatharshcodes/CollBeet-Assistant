@@ -12,8 +12,6 @@ const getAllAnnouncements = async () =>
         const d1 = new Date();
         const n = d1.toDateString();
 
-        console.log(n);
-
         const receivedAnnouncements = data.filter(function(i) {
           return i.date == n;
         });
