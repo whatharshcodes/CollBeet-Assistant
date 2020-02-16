@@ -11,6 +11,7 @@ const messScheduleFunctions = require("./helperFunctions/messScheduleFunctions")
 const generalFunctions = require("./helperFunctions/generalFunctions");
 const announcementFunctions = require("./helperFunctions/announcementFunctions");
 const locationsFunctions = require("./helperFunctions/locationsFunctions");
+const collegeInfoFunctions = require("./helperFunctions/collegeInfoFunctions");
 
 // Instantiate the Dialogflow client.
 const app = dialogflow({ debug: true });
@@ -512,6 +513,42 @@ app.intent("Get Staffroom Location", async (conv, params) => {
   const userDepartment = params.department;
 
   var details = await locationsFunctions.getStaffroomLocation(userDepartment);
+
+  conv.ask(details.message);
+
+  conv.ask(
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+});
+
+app.intent("Get Lab Location", async (conv, params) => {
+  const userDepartment = params.department;
+
+  var details = await locationsFunctions.getLabLocation(userDepartment);
+
+  conv.ask(details.message);
+
+  conv.ask(
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+});
+
+app.intent("Get College Locations", async (conv, params) => {
+  const locations = params.locations;
+
+  var details = await locationsFunctions.getCollegeLocations(locations);
+
+  conv.ask(details.message);
+
+  conv.ask(
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+});
+
+app.intent("Get College Info", async (conv, params) => {
+  const collinfo = params.collinfo;
+
+  var details = await collegeInfoFunctions.getCollegeInfo(collinfo);
 
   conv.ask(details.message);
 
