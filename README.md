@@ -39,6 +39,8 @@ CollBeet Assistant is a Google Action designed to work as a personal companion f
 
 **Note: Before proceeding, make sure you have [CollBeet Admin](https://github.com/kalol-institute-of-technology/CollBeet-Admin) up and running on a server.**
 
+---
+
 ### Setup Project and Agent
 
 1. Open the [Actions Console](https://console.actions.google.com/).
@@ -71,6 +73,8 @@ CollBeet Assistant is a Google Action designed to work as a personal companion f
 
 1. Click **Done**
 
+---
+
 ### Deploy your fulfillment
 
 Now that your Actions project and Dialogflow agent are ready, do the following to deploy your local index.js file using the Firebase Functions CLI:
@@ -99,6 +103,8 @@ Now that your Actions project and Dialogflow agent are ready, do the following t
         
 After a few minutes, you should see **"Deploy complete!"** indicating that you've successfully deployed your webhook to Firebase.
 
+---
+
 ### Retrieve the deployment URL
 
 1. Open the [Firebase Console](https://console.firebase.google.com/).
@@ -108,6 +114,8 @@ After a few minutes, you should see **"Deploy complete!"** indicating that you'v
 1. Navigate to **Develop > Functions** on the left navigation bar. If you're prompted to **"Choose data sharing settings"**, you can ignore this option by clicking Do this later.
 
 1. Under the **Dashboard** tab, you should see an entry for **"dialogflowFirebaseFulfillment"** with a URL under Trigger. **Copy this URL**.
+
+---
 
 ### Set the URL in Dialogflow
 
@@ -121,9 +129,13 @@ After a few minutes, you should see **"Deploy complete!"** indicating that you'v
 
 1. Click **Save*.
 
+---
+
 ## Sample Utterances
 
 Following are all the phrases that can be used to interact with the CollBeet Assistant.
+
+---
 
 ### Student Schedule
 
@@ -144,6 +156,8 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    ```
    List All Tomorrow's Lectures
    ```
+   
+---
 
 ### Mess Schedule
 
@@ -182,6 +196,8 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    ```
    Can I get canteen schedule for tomorrow?
    ```
+   
+---
 
 
 ### Daily Announcements
@@ -191,6 +207,8 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    ```
    Any announcements today?
    ```
+   
+---
 
 ### College Locations
 
@@ -242,6 +260,8 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    Where can I find Security Cabin?"
    ```
    
+---
+   
 ### College Info
 
 **College Name**
@@ -267,6 +287,8 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    ```
    What is our college phone number?
    ```
+   
+---
 
 ### User Utterances
 
@@ -281,3 +303,5 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    ```
    Stop
    ```
+   
+---
