@@ -2,7 +2,7 @@
 
 // Import the Dialogflow module and response creation dependencies
 // from the Actions on Google client library.
-const { dialogflow, Table } = require("actions-on-google");
+const { dialogflow, Table, Suggestions } = require("actions-on-google");
 
 // Import the firebase-functions package for deployment.
 const functions = require("firebase-functions");
@@ -18,7 +18,21 @@ const app = dialogflow({ debug: true });
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent("Default Welcome Intent", conv => {
+  if (!conv.screen) {
+    conv.ask(`Welcome to CollBeet Assistant. How can I help you?.`);
+    return;
+  }
+
   conv.ask(`Welcome to CollBeet Assistant. How can I help you?.`);
+
+  conv.ask(
+    new Suggestions([
+      `Today's Lectures`,
+      "Daily Announcements",
+      "Mess Hall Schedule",
+      "Setup User Details"
+    ])
+  );
 });
 
 app.intent("Setup User Details", conv => {
@@ -46,11 +60,29 @@ app.intent("Save Semester", async (conv, params) => {
   const sem = params.semester;
   conv.user.storage.userSemester = sem;
   const userSemester = conv.user.storage.userSemester;
+
+  if (!conv.screen) {
+    conv.ask(
+      `Ok your current semester is now set to ${userSemester}. User registration is now complete. In future if you want to change either your semester or department. Just say, "Setup my user details".`
+    );
+
+    conv.ask(`<speak><break time="0.7" />So how can I help you today?</speak>`);
+    return;
+  }
+
   conv.ask(
     `Ok your current semester is now set to ${userSemester}. User registration is now complete. In future if you want to change either your semester or department. Just say, "Setup my user details".`
   );
 
   conv.ask(`<speak><break time="0.7" />So how can I help you today?</speak>`);
+
+  conv.ask(
+    new Suggestions([
+      `Today's Lectures`,
+      "Daily Announcements",
+      "Mess Hall Schedule"
+    ])
+  );
 });
 
 app.intent("Get Next Lecture", async conv => {
@@ -58,9 +90,18 @@ app.intent("Get Next Lecture", async conv => {
   const userDepartment = conv.user.storage.userDepartment;
 
   if (!userSemester || !userDepartment) {
+    if (!conv.screen) {
+      conv.ask(
+        `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+      );
+
+      return;
+    }
+
     conv.ask(
       `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
     );
+    conv.ask(new Suggestions(["Setup User Details"]));
   } else {
     var details = await studentScheduleFunctions.getNextLectureDetails(
       userSemester,
@@ -137,6 +178,7 @@ app.intent("Get Next Lecture", async conv => {
     conv.ask(
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
+    conv.ask(new Suggestions([`Today's Lectures`, `Tomorrow's Lectures`]));
   }
 });
 
@@ -145,9 +187,18 @@ app.intent("List All Today's Lectures", async conv => {
   const userDepartment = conv.user.storage.userDepartment;
 
   if (!userSemester || !userDepartment) {
+    if (!conv.screen) {
+      conv.ask(
+        `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+      );
+
+      return;
+    }
+
     conv.ask(
       `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
     );
+    conv.ask(new Suggestions(["Setup User Details"]));
   } else {
     var details = await studentScheduleFunctions.getAllTodaysLectures(
       userSemester,
@@ -230,6 +281,8 @@ app.intent("List All Today's Lectures", async conv => {
     conv.ask(
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
+    
+    conv.ask(new Suggestions([`Next Lecture`, `Tomorrow's Lectures`]));
   }
 });
 
@@ -238,9 +291,18 @@ app.intent("List All Tomorrow's Lectures", async conv => {
   const userDepartment = conv.user.storage.userDepartment;
 
   if (!userSemester || !userDepartment) {
+    if (!conv.screen) {
+      conv.ask(
+        `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+      );
+
+      return;
+    }
+
     conv.ask(
       `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
     );
+    conv.ask(new Suggestions(["Setup User Details"]));
   } else {
     var details = await studentScheduleFunctions.getAllTomorrowsLectures(
       userSemester,
@@ -323,6 +385,8 @@ app.intent("List All Tomorrow's Lectures", async conv => {
     conv.ask(
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
+
+    conv.ask(new Suggestions([`Next Lecture`, `Today's Lectures`]));
   }
 });
 
@@ -331,10 +395,29 @@ app.intent("Get Mess Meal", async (conv, params) => {
 
   var details = await messScheduleFunctions.getMessMeal(mealType);
 
+  if (!conv.screen) {
+    conv.ask(details.message);
+
+    conv.ask(
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+    );
+    return;
+  }
+
   conv.ask(details.message);
 
   conv.ask(
     `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+
+  conv.ask(
+    new Suggestions([
+      `Mess Hall Schedule`,
+      `Today's Breakfast`,
+      `Today's Lunch`,
+      `Today's Snacks`,
+      `Today's Dinner`
+    ])
   );
 });
 
@@ -395,6 +478,14 @@ app.intent("Get All Today's Mess Meal", async conv => {
   conv.ask(
     `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
   );
+
+  conv.ask(
+    new Suggestions([
+      `Tomorrow's Canteen Meals`,
+      `Today's Lunch`,
+      `Today's Dinner`
+    ])
+  );
 });
 
 app.intent("Get All Tomorrow's Mess Meal", async conv => {
@@ -454,6 +545,13 @@ app.intent("Get All Tomorrow's Mess Meal", async conv => {
   conv.ask(
     `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
   );
+  conv.ask(
+    new Suggestions([
+      `Today's Canteen Schedule`,
+      `Today's Breakfast`,
+      `Today's Snack`
+    ])
+  );
 });
 
 app.intent("Get All Announcements", async conv => {
@@ -497,7 +595,7 @@ app.intent("Get All Announcements", async conv => {
           {
             header: "Announcements",
             align: "LEADING"
-          },
+          }
         ],
         rows: rowarr
       })
@@ -506,8 +604,9 @@ app.intent("Get All Announcements", async conv => {
   conv.ask(
     `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
   );
-});
 
+  conv.ask(new Suggestions([`Next Lecture`]));
+});
 
 app.intent("Get Staffroom Location", async (conv, params) => {
   const userDepartment = params.department;
@@ -550,10 +649,28 @@ app.intent("Get College Info", async (conv, params) => {
 
   var details = await collegeInfoFunctions.getCollegeInfo(collinfo);
 
+  if (!conv.screen) {
+    conv.ask(details.message);
+
+    conv.ask(
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+    );
+    return;
+  }
+
   conv.ask(details.message);
 
   conv.ask(
     `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+
+  conv.ask(
+    new Suggestions([
+      `College Name`,
+      `College Address`,
+      `College Website`,
+      `College Phone Number`
+    ])
   );
 });
 
