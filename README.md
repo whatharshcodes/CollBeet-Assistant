@@ -89,11 +89,11 @@ Now that your Actions project and Dialogflow agent are ready, do the following t
 
         firebase functions:config:set envariables.server_url="<SERVER_URL>"
         
-  For example if your custom domain is `https://collbeet.test`, you need to **run** the following command:
+   **For example:** If your custom domain is `https://collbeet.test`, you need to **run** the following command:
  
-        firebase functions:config:set envariables.server_url="https://collbeet.test"     
+         firebase functions:config:set envariables.server_url="https://collbeet.test"     
         
-1. Run the following command in the terminal to deploy your webhook to Firebase.
+1. **Run** the following command in the terminal to deploy your webhook to Firebase.
 
         firebase deploy --project <PROJECT_ID>
         
