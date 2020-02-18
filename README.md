@@ -24,6 +24,7 @@ CollBeet Assistant is a Google Action designed to work as a personal companion f
     * [College Locations](#college-locations)
     * [College Info](#college-info)
     * [User Utterances](#user-utterances)
+ * [Actions Using CollBeet](#actions-using-collbeet)
     
 ---
 
@@ -96,6 +97,8 @@ Now that your Actions project and Dialogflow agent are ready, do the following t
    **For example:** If your custom domain is `https://collbeet.test`, you need to **run** the following command:
  
          firebase functions:config:set envariables.server_url="https://collbeet.test"     
+         
+1. Go the the **index.js** file and personlise the phrase `Welcome to CollBeet Assistant. How can I help you?.` in **Default Welcome Intent**. **Save** the file. **Note**: Can be done later also.
         
 1. **Run** the following command in the terminal to deploy your webhook to Firebase.
 
@@ -304,4 +307,16 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    Stop
    ```
    
+---
+
+## Actions Using CollBeet
+
+To publish an Action on store made using CollBeet, you can use any Invocation name and description of your choice, that you think is best suited for you and your college. Make sure to go through this [Pre-launch checklists](https://developers.google.com/assistant/conversational/checklist), for pain less submission process. For privacy policy, you can use the following [sample version](https://docs.google.com/document/d/1oYf_ZOn42SrsUFUesY9_GI6FaBXzYlclWHoHJTCNdDE/edit?usp=sharing). Following are the Actions using CollBeet:
+
+---
+
+### Sandra Companion
+
+Sandra Companion is a conversational AI deployed in [Kalol Institute Of Technology and Research Center](http://www.kirc.ac.in/), used by over 500 students in their day to day life. You can access Sandra Companion from [here](https://assistant.google.com/services/a/uid/00000068b3c470ee?hl=en-GB&source=web)
+
 ---
