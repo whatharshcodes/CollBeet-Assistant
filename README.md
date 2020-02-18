@@ -317,6 +317,12 @@ To publish an Action on store made using CollBeet, you can use any Invocation na
 
 ### Sandra Companion
 
+<p  align="center">
+
+<img  src="https://user-images.githubusercontent.com/41849970/74735003-ce0f9380-5275-11ea-8f3a-fc642fd4ae12.png">
+
+</p>
+
 Sandra Companion is a conversational AI deployed in [Kalol Institute Of Technology and Research Center](http://www.kirc.ac.in/), used by over 500 students in their day to day life. You can access Sandra Companion from [here](https://assistant.google.com/services/a/uid/00000068b3c470ee?hl=en-GB&source=web)
 
 ---
