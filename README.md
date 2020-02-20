@@ -44,6 +44,10 @@ CollBeet Assistant is a Google Action designed to work as a personal companion f
 
 ### Setup Project and Agent
 
+1. Clone this repo on to your local machine using following command.
+
+      `git clone https://github.com/kalol-institute-of-technology/CollBeet-Assistant`
+
 1. Open the [Actions Console](https://console.actions.google.com/).
 
 1. Click **New project**.
@@ -68,7 +72,7 @@ CollBeet Assistant is a Google Action designed to work as a personal companion f
 
 1. Click **Restore From Zip**.
 
-1. **Upload** the `CollBeetAssistantAgent.zip` file.
+1. **Upload** the `CollBeetAssistantAgent.zip` file from cloned repo folder.
 
 1. Type **"RESTORE"** and click the **Restore** button.
 
