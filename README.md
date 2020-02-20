@@ -222,49 +222,49 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
 **Location Of Staffroom**
 
    ```
-   Where can I find [Department Name] Staff room?"
+   Where can I find [Department Name] Staff room?
    ```
    
 **Location Of Lab**
 
    ```
-   Where can I find [Department Name] Lab?"
+   Where can I find [Department Name] Lab?
    ```
    
 **Location Of Principal Office**
 
    ```
-   Where can I find Principal's Office?"
+   Where can I find Principal's Office?
    ```
    
 **Location Of Admin Office**
 
    ```
-   Where can I find Admin's Office?"
+   Where can I find Admin's Office?
    ```
    
 **Location Of Cafeteria**
 
    ```
-   Where can I find Cafeteria?"
+   Where can I find Cafeteria?
    ```
 
 **Location Of Mess Hall**
 
    ```
-   Where can I find Mess Hall?"
+   Where can I find Mess Hall?
    ```
 
 **Location Of Auditorium**
 
    ```
-   Where can I find Auditorium?"
+   Where can I find Auditorium?
    ```
    
 **Location Of Security Cabin**
 
    ```
-   Where can I find Security Cabin?"
+   Where can I find Security Cabin?
    ```
    
 ---
