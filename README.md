@@ -97,7 +97,7 @@ Now that your Actions project and Dialogflow agent are ready, do the following t
 
 1. **Setup** Environemental Variables. You will require either the external IP or custom domain of deployed CollBeet Admin Server, once you have that **run** the following command:
 
-        firebase functions:config:set envariables.server_url="<SERVER_URL>"
+        firebase functions:config:set envariables.server_url="<SERVER_URL>" --project <PROJECT_ID>
         
    **For example:** If your custom domain is `https://collbeet.test`, you need to **run** the following command:
  
