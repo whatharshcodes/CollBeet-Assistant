@@ -24,6 +24,7 @@ CollBeet Assistant is a Google Action designed to work as a personal companion f
     * [College Locations](#college-locations)
     * [College Info](#college-info)
     * [User Utterances](#user-utterances)
+ * [Publishing Your Action](#publishing-your-action)
  * [Actions Using CollBeet](#actions-using-collbeet)
     
 ---
@@ -313,9 +314,13 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    
 ---
 
-## Actions Using CollBeet
+## Publishing Your Action
 
-To publish an Action on store made using CollBeet, you can use any Invocation name and description of your choice, that you think is best suited for you and your college. Make sure to go through this [Pre-launch checklists](https://developers.google.com/assistant/conversational/checklist), for pain less submission process. For privacy policy, you can use the following [sample version](https://docs.google.com/document/d/1oYf_ZOn42SrsUFUesY9_GI6FaBXzYlclWHoHJTCNdDE/edit?usp=sharing). Following are the Actions using CollBeet:
+To publish an Action on store made using CollBeet, you can use any Invocation name and description of your choice, that you think is best suited for you and your college. Make sure to go through this [Pre-launch checklists](https://developers.google.com/assistant/conversational/checklist), for pain less submission process. For privacy policy, you can use the following [sample version](https://docs.google.com/document/d/1oYf_ZOn42SrsUFUesY9_GI6FaBXzYlclWHoHJTCNdDE/edit?usp=sharing). 
+
+## Actions using CollBeet
+
+Following are the Actions using CollBeet:
 
 ---
 
