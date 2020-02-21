@@ -103,7 +103,7 @@ Now that your Actions project and Dialogflow agent are ready, do the following t
  
          firebase functions:config:set envariables.server_url="https://collbeet.test"     
          
-1. Go the the **index.js** file and personlise the phrase `Welcome to CollBeet Assistant. How can I help you?.` in **Default Welcome Intent**. **Save** the file. **Note**: Can be done later also.
+1. Go the the **index.js** file and personalise the phrase `Welcome to CollBeet Assistant. How can I help you?.` in **Default Welcome Intent**. **Save** the file. **Note**: Can be done later also. Pesonalise means replace the name `CollBeet Assistant` with your action/companion name.
         
 1. **Run** the following command in the terminal to deploy your webhook to Firebase.
 
