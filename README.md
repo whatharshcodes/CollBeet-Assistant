@@ -135,7 +135,7 @@ After a few minutes, you should see **"Deploy complete!"** indicating that you'v
 
 1. **Paste the URL** you copied from the Firebase dashboard if it doesn't already appear.
 
-1. Click **Save*.
+1. Click **Save**.
 
 ---
 
