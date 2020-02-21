@@ -86,7 +86,7 @@ Now that your Actions project and Dialogflow agent are ready, do the following t
 
 1. In a **terminal**, navigate to the **/functions** directory of your base files clone.
 
-1. Using the Actions project ID you set, run the following command:
+1. Using the Actions project ID, run the following command:
 
         firebase use --project <PROJECT_ID>
 
