@@ -333,3 +333,7 @@ Following are the Actions using CollBeet:
 | ![](https://user-images.githubusercontent.com/41849970/74735003-ce0f9380-5275-11ea-8f3a-fc642fd4ae12.png)         | Sandra Companion | Sandra Companion is a conversational AI deployed in [Kalol Institute Of Technology and Research Center](http://www.kirc.ac.in/), used by students of all Engineering branches, in their day to day life. You can access Sandra Companion from [here](https://assistant.google.com/services/a/uid/00000068b3c470ee?hl=en-GB&source=web) |
 
 ---
+
+If you have an Action using CollBeet, why not showcase it to the world. You can make a Pull Request to add it to this table 👆
+
+---
