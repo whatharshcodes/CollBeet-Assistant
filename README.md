@@ -34,6 +34,7 @@ CollBeet Assistant is a Google Action designed to work as a personal companion f
 1. Node.js and NPM
 2. Install the [Firebase CLI](https://firebase.google.com/docs/cli/)
 3. CollBeet Admin
+4. GCP Account with Billing Enabled
 
 ---
 
@@ -109,7 +110,7 @@ Now that your Actions project and Dialogflow agent are ready, do the following t
 
         firebase deploy --project <PROJECT_ID>
         
-After a few minutes, you should see **"Deploy complete!"** indicating that you've successfully deployed your webhook to Firebase.
+After a few minutes, you should see **"Deploy complete!"** indicating that you've successfully deployed your webhook to Firebase. Make sure you have the [billing](https://console.cloud.google.com/billing) enabled with the project used by your Action on GCP else external network will not be accessible and your action will not be able to retrieve data from CollBeet Admin.
 
 ---
 
@@ -136,6 +137,10 @@ After a few minutes, you should see **"Deploy complete!"** indicating that you'v
 1. **Paste the URL** you copied from the Firebase dashboard if it doesn't already appear.
 
 1. Click **Save**.
+
+---
+
+If followed correctly CollBeet Assistant should be deployed now. If you are facing errors, definitely check your [logs](https://console.cloud.google.com/logs) to know exactly what error you have been facing. If logs are not showing up, click on **Resources Drop Down Menu** below `Filter by label or text search` textfield, and select **Cloud Function** > **dialogflowFirebaseFulfillment** > **All Region**
 
 ---
 
