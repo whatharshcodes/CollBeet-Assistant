@@ -327,6 +327,113 @@ const getAllTomorrowsLectures = async (userSemester, userDepartment) =>
       };
     });
 
+const getSpecificDayLectures = async (userSemester, userDepartment, days) =>
+  await axios
+    .get(apiEndpoints.studentScheduleUrl)
+    .then(res => res.data)
+    .then(res => {
+      const data = res.data;
+
+      if (data) {
+        let n = days;
+        console.log(n);
+
+        let dept = userDepartment;
+        let semcode = userSemester;
+
+        const allTodaysLectures = data
+          .filter(function(i) {
+            return i.deptcode === dept;
+          })
+          .map(function(i) {
+            return i.activesem;
+          })[0]
+          .filter(function(i) {
+            return i.semid == semcode;
+          })
+          .map(function(i) {
+            return i.schedule;
+          })[0]
+          .filter(function(i) {
+            return i.dayid == n;
+          });
+
+        if (allTodaysLectures.length > 0) {
+          allTodaysLectures.sort(function(a, b) {
+            const astart = generalFunctions.getTimefromTimestamp(a.startTime);
+            const bstart = generalFunctions.getTimefromTimestamp(b.startTime);
+
+            if (
+              parseInt(astart.split(":")[0]) -
+                parseInt(bstart.split(":")[0]) ===
+              0
+            ) {
+              return (
+                parseInt(astart.split(":")[1]) - parseInt(bstart.split(":")[1])
+              );
+            } else {
+              return (
+                parseInt(astart.split(":")[0]) - parseInt(bstart.split(":")[0])
+              );
+            }
+          });
+
+          const msgs = [];
+
+          for (let i = 0; i <= allTodaysLectures.length - 1; i++) {
+            var stime = generalFunctions.getTimefromTimestamp(
+              allTodaysLectures[i].startTime
+            );
+            var etime = generalFunctions.getTimefromTimestamp(
+              allTodaysLectures[i].endTime
+            );
+
+            if (allTodaysLectures[i].breakValue == false) {
+              msgs.push(
+                `Lecture no: ${i + 1}. Lecture Name: ${
+                  allTodaysLectures[i].lectureName
+                }, which will be taken by ${
+                  allTodaysLectures[i].teacherName
+                }. Lecture is from ${stime} to ${etime} <break time=\"0.7\" />`
+              );
+            } else {
+              msgs.push(
+                `Lecture no: ${i +
+                  1} is a break from ${stime} to ${etime}. <break time=\"0.7\" />`
+              );
+            }
+          }
+
+          const responseString = msgs.join(". ");
+
+          return {
+            success: true,
+            fullmessage: `<speak> You have ${allTodaysLectures.length} lecture(s) on that day. ${responseString} </speak>`,
+            message: `You have following ${allTodaysLectures.length} lecture(s) on that day.`,
+            lectures: allTodaysLectures
+          };
+        } else {
+          return {
+            success: false,
+            message: `Sorry but I am unable to find any lectures for your request. Are you sure it's not a holiday ?`
+          };
+        }
+      } else {
+        return {
+          success: false,
+          message: `Sorry but I am unable to find any lectures for your request.`
+        };
+      }
+    })
+    .catch(err => {
+      console.log(err.message);
+      return {
+        success: false,
+        message: `Sorry but I am unable to find any lectures for your request.`
+      };
+    });
+
 module.exports.getNextLectureDetails = getNextLectureDetails;
 module.exports.getAllTodaysLectures = getAllTodaysLectures;
 module.exports.getAllTomorrowsLectures = getAllTomorrowsLectures;
+module.exports.getSpecificDayLectures = getSpecificDayLectures;

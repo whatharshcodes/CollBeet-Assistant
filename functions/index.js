@@ -178,7 +178,7 @@ app.intent("Get Next Lecture", async conv => {
     conv.ask(
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
-    conv.ask(new Suggestions([`Today's Lectures`, `Tomorrow's Lectures`]));
+    conv.ask(new Suggestions([`Today's Lectures`, `Tomorrow's Lectures`, `Tuesday Lectures`]));
   }
 });
 
@@ -282,7 +282,7 @@ app.intent("List All Today's Lectures", async conv => {
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
     
-    conv.ask(new Suggestions([`Next Lecture`, `Tomorrow's Lectures`]));
+    conv.ask(new Suggestions([`Next Lecture`, `Tomorrow's Lectures`, `Friday Lectures`]));
   }
 });
 
@@ -386,7 +386,113 @@ app.intent("List All Tomorrow's Lectures", async conv => {
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
 
-    conv.ask(new Suggestions([`Next Lecture`, `Today's Lectures`]));
+    conv.ask(new Suggestions([`Next Lecture`, `Today's Lectures`, `Monday Lectures`]));
+  }
+});
+
+app.intent("Get Specific Day Lectures", async (conv, params) => {
+  const userSemester = conv.user.storage.userSemester;
+  const userDepartment = conv.user.storage.userDepartment;
+  const days = params.days;
+
+  if (!userSemester || !userDepartment) {
+    if (!conv.screen) {
+      conv.ask(
+        `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+      );
+
+      return;
+    }
+
+    conv.ask(
+      `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+    );
+    conv.ask(new Suggestions(["Setup User Details"]));
+  } else {
+    var details = await studentScheduleFunctions.getSpecificDayLectures(
+      userSemester,
+      userDepartment,
+      days
+    );
+
+    if (!conv.screen) {
+      if (details.fullmessage) {
+        conv.ask(details.fullmessage);
+        conv.ask(
+          `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+        );
+        return;
+      } else {
+        conv.ask(details.message);
+        conv.ask(
+          `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+        );
+        return;
+      }
+    }
+
+    conv.ask(details.message);
+
+    var dict = details.lectures;
+
+    if (dict) {
+      var rowarr = [];
+
+      dict.forEach(myFunc);
+
+      function myFunc(item) {
+        if (item.breakValue == true) {
+          const l = "Break";
+          const t = "-";
+          const s1 = item.startTime;
+          var s = generalFunctions.getTimefromTimestamp(s1);
+          const e1 = item.endTime;
+          var e = generalFunctions.getTimefromTimestamp(e1);
+
+          rowarr.push([l, t, s, e]);
+        } else {
+          const l = item.lectureName;
+          const t = item.teacherName;
+          const s1 = item.startTime;
+          var s = generalFunctions.getTimefromTimestamp(s1);
+          const e1 = item.endTime;
+          var e = generalFunctions.getTimefromTimestamp(e1);
+
+          rowarr.push([l, t, s, e]);
+        }
+      }
+
+      conv.ask(
+        new Table({
+          title: "Lectures Schedule",
+          subtitle: "You have this lectures on that day.",
+          columns: [
+            {
+              header: "Subject Name",
+              align: "LEADING"
+            },
+            {
+              header: "Teacher Name",
+              align: "LEADING"
+            },
+            {
+              header: "Start Time",
+              align: "LEADING"
+            },
+            {
+              header: "End Time",
+              align: "LEADING"
+            }
+          ],
+          rows: rowarr
+        })
+      );
+    }
+    conv.ask(
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+    );
+    
+    conv.ask(new Suggestions([`Next Lecture`, `Tomorrow's Lectures`, `Today's Lectures`]));
   }
 });
 
