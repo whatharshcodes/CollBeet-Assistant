@@ -24,7 +24,6 @@ const radomEndPhrase = () => {
   return phrase;
 };
 
-
 module.exports.getTimefromTimestamp = getTimefromTimestamp;
 module.exports.getRandomNumber = getRandomNumber;
 module.exports.radomEndPhrase = radomEndPhrase;

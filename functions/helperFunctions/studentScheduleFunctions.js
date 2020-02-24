@@ -48,6 +48,25 @@ const getNextLectureDetails = async (userSemester, userDepartment) =>
         });
 
         if (filteredWokrHours.length > 0) {
+          filteredWokrHours.sort(function(a, b) {
+            const astart = generalFunctions.getTimefromTimestamp(a.startTime);
+            const bstart = generalFunctions.getTimefromTimestamp(b.startTime);
+
+            if (
+              parseInt(astart.split(":")[0]) -
+                parseInt(bstart.split(":")[0]) ===
+              0
+            ) {
+              return (
+                parseInt(astart.split(":")[1]) - parseInt(bstart.split(":")[1])
+              );
+            } else {
+              return (
+                parseInt(astart.split(":")[0]) - parseInt(bstart.split(":")[0])
+              );
+            }
+          });
+
           const arr = filteredWokrHours[0];
 
           const {
@@ -127,6 +146,25 @@ const getAllTodaysLectures = async (userSemester, userDepartment) =>
           });
 
         if (allTodaysLectures.length > 0) {
+          allTodaysLectures.sort(function(a, b) {
+            const astart = generalFunctions.getTimefromTimestamp(a.startTime);
+            const bstart = generalFunctions.getTimefromTimestamp(b.startTime);
+
+            if (
+              parseInt(astart.split(":")[0]) -
+                parseInt(bstart.split(":")[0]) ===
+              0
+            ) {
+              return (
+                parseInt(astart.split(":")[1]) - parseInt(bstart.split(":")[1])
+              );
+            } else {
+              return (
+                parseInt(astart.split(":")[0]) - parseInt(bstart.split(":")[0])
+              );
+            }
+          });
+
           const msgs = [];
 
           for (let i = 0; i <= allTodaysLectures.length - 1; i++) {
@@ -215,6 +253,25 @@ const getAllTomorrowsLectures = async (userSemester, userDepartment) =>
           });
 
         if (allLectures.length > 0) {
+          allLectures.sort(function(a, b) {
+            const astart = generalFunctions.getTimefromTimestamp(a.startTime);
+            const bstart = generalFunctions.getTimefromTimestamp(b.startTime);
+
+            if (
+              parseInt(astart.split(":")[0]) -
+                parseInt(bstart.split(":")[0]) ===
+              0
+            ) {
+              return (
+                parseInt(astart.split(":")[1]) - parseInt(bstart.split(":")[1])
+              );
+            } else {
+              return (
+                parseInt(astart.split(":")[0]) - parseInt(bstart.split(":")[0])
+              );
+            }
+          });
+
           const msgs = [];
 
           for (let i = 0; i <= allLectures.length - 1; i++) {
