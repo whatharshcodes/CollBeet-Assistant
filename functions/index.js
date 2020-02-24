@@ -30,6 +30,8 @@ app.intent("Default Welcome Intent", conv => {
       `Today's Lectures`,
       "Daily Announcements",
       "Mess Hall Schedule",
+      "My Semester Fees",
+      "All College Clubs",
       "Setup User Details"
     ])
   );
@@ -78,9 +80,11 @@ app.intent("Save Semester", async (conv, params) => {
 
   conv.ask(
     new Suggestions([
-      `Today's Lectures`,
+      "Today's Lectures",
       "Daily Announcements",
-      "Mess Hall Schedule"
+      "Mess Hall Schedule",
+      "My Semester Fees",
+      "All College Clubs",
     ])
   );
 });
@@ -178,7 +182,13 @@ app.intent("Get Next Lecture", async conv => {
     conv.ask(
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
-    conv.ask(new Suggestions([`Today's Lectures`, `Tomorrow's Lectures`, `Tuesday Lectures`]));
+    conv.ask(
+      new Suggestions([
+        `Today's Lectures`,
+        `Tomorrow's Lectures`,
+        `Tuesday Lectures`
+      ])
+    );
   }
 });
 
@@ -281,8 +291,14 @@ app.intent("List All Today's Lectures", async conv => {
     conv.ask(
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
-    
-    conv.ask(new Suggestions([`Next Lecture`, `Tomorrow's Lectures`, `Friday Lectures`]));
+
+    conv.ask(
+      new Suggestions([
+        `Next Lecture`,
+        `Tomorrow's Lectures`,
+        `Friday Lectures`
+      ])
+    );
   }
 });
 
@@ -386,7 +402,9 @@ app.intent("List All Tomorrow's Lectures", async conv => {
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
 
-    conv.ask(new Suggestions([`Next Lecture`, `Today's Lectures`, `Monday Lectures`]));
+    conv.ask(
+      new Suggestions([`Next Lecture`, `Today's Lectures`, `Monday Lectures`])
+    );
   }
 });
 
@@ -491,8 +509,14 @@ app.intent("Get Specific Day Lectures", async (conv, params) => {
     conv.ask(
       `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
     );
-    
-    conv.ask(new Suggestions([`Next Lecture`, `Tomorrow's Lectures`, `Today's Lectures`]));
+
+    conv.ask(
+      new Suggestions([
+        `Next Lecture`,
+        `Tomorrow's Lectures`,
+        `Today's Lectures`
+      ])
+    );
   }
 });
 
@@ -772,12 +796,241 @@ app.intent("Get College Info", async (conv, params) => {
 
   conv.ask(
     new Suggestions([
-      `College Name`,
+      `Head Of Department Detail`,
       `College Address`,
-      `College Website`,
-      `College Phone Number`
+      `My Semester Fee`,
+      "All College Clubs"
     ])
   );
+});
+
+app.intent("Get Your Fee Details", async conv => {
+  const userDepartment = conv.user.storage.userDepartment;
+
+  if (!userDepartment) {
+    if (!conv.screen) {
+      conv.ask(
+        `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+      );
+
+      return;
+    }
+
+    conv.ask(
+      `Sorry to access this feature you need to complete your user registration. Please say "Setup my user details", to complete your user registration.`
+    );
+    conv.ask(new Suggestions(["Setup User Details"]));
+  } else {
+    var details = await collegeInfoFunctions.getMySemesterFee(userDepartment);
+
+    if (!conv.screen) {
+      conv.ask(details.message);
+
+      conv.ask(
+        `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+      );
+      return;
+    }
+
+    conv.ask(details.message);
+
+    conv.ask(
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+    );
+
+    conv.ask(
+      new Suggestions([
+        `Head Of Department Detail`,
+        `Department Semester Fees`,
+        `College Phone Number`,
+        "All College Clubs"
+      ])
+    );
+  }
+});
+
+app.intent("Get Department Semester Fee", async (conv, params) => {
+  const userDepartment = params.department;
+
+  var details = await collegeInfoFunctions.getMySemesterFee(userDepartment);
+
+  if (!conv.screen) {
+    conv.ask(details.message);
+
+    conv.ask(
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+    );
+    return;
+  }
+
+  conv.ask(details.message);
+
+  conv.ask(
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+
+  conv.ask(
+    new Suggestions([
+      `My Semester Fees`,
+      `College Website`,
+      `Head Of Department Detail`,
+      "All College Clubs"
+    ])
+  );
+});
+
+app.intent("Get HOD Details", async (conv, params) => {
+  const userDepartment = params.department;
+
+  var details = await collegeInfoFunctions.getHODDetails(userDepartment);
+
+  if (!conv.screen) {
+    conv.ask(details.message);
+
+    conv.ask(
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+    );
+    return;
+  }
+
+  conv.ask(details.message);
+
+  conv.ask(
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+
+  conv.ask(
+    new Suggestions([
+      `My Semester Fees`,
+      `College Website`,
+      `College Phone Number`,
+      "All College Clubs"
+    ])
+  );
+});
+
+app.intent("All College Clubs Info", async conv => {
+  var details = await collegeInfoFunctions.getAllClubDetails();
+
+  if (!conv.screen) {
+    conv.ask(details.fullmessage);
+    conv.ask(
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+    );
+    return;
+  }
+
+  conv.ask(details.message);
+
+  var dict = details.clubsarr;
+
+  if (dict) {
+    var rowarr = [];
+
+    dict.forEach(myFunc);
+
+    function myFunc(item) {
+      const cn = item.clubName;
+      const cln = item.clubLeaderName;
+      const clc = item.clubLeaderContact;
+      const ct = item.clubType;
+
+      rowarr.push([cn,cln,clc,ct]);
+    }
+    conv.ask(
+      new Table({
+        title: "College Clubs",
+        subtitle: "This are all active college clubs",
+        columns: [
+          {
+            header: "Club Name",
+            align: "LEADING"
+          },
+          {
+            header: "Club Leader Name",
+            align: "LEADING"
+          },
+          {
+            header: "Club Leader Contact",
+            align: "LEADING"
+          },
+          {
+            header: "Club Type",
+            align: "LEADING"
+          }
+        ],
+        rows: rowarr
+      })
+    );
+  }
+  conv.ask(
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+
+  conv.ask(new Suggestions([`Next Lecture`, `College Address`, `Head Of Department Detail`, `Technology Clubs`]));
+});
+
+app.intent("Specific College Clubs", async (conv,params) => {
+  var clubtype = params.clubs;
+
+  var details = await collegeInfoFunctions.getSpecificClubDetails(clubtype);
+
+  if (!conv.screen) {
+    conv.ask(details.fullmessage);
+    conv.ask(
+      `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+    );
+    return;
+  }
+
+  conv.ask(details.message);
+
+  var dict = details.clubsarr;
+
+  if (dict) {
+    var rowarr = [];
+
+    dict.forEach(myFunc);
+
+    function myFunc(item) {
+      const cn = item.clubName;
+      const cln = item.clubLeaderName;
+      const clc = item.clubLeaderContact;
+      const ct = item.clubType;
+
+      rowarr.push([cn,cln,clc,ct]);
+    }
+    conv.ask(
+      new Table({
+        title: "College Clubs",
+        subtitle: "This are all active college clubs",
+        columns: [
+          {
+            header: "Club Name",
+            align: "LEADING"
+          },
+          {
+            header: "Club Leader Name",
+            align: "LEADING"
+          },
+          {
+            header: "Club Leader Contact",
+            align: "LEADING"
+          },
+          {
+            header: "Club Type",
+            align: "LEADING"
+          }
+        ],
+        rows: rowarr
+      })
+    );
+  }
+  conv.ask(
+    `<speak><break time=\"0.7\" />${generalFunctions.radomEndPhrase()}</speak>`
+  );
+
+  conv.ask(new Suggestions([`Next Lecture`, `College Address`, `Head Of Department Detail`, "All College Clubs"]));
 });
 
 // Set the DialogflowApp object to handle the HTTPS POST request.

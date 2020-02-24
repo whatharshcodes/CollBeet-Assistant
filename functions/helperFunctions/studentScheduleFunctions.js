@@ -336,7 +336,6 @@ const getSpecificDayLectures = async (userSemester, userDepartment, days) =>
 
       if (data) {
         let n = days;
-        console.log(n);
 
         let dept = userDepartment;
         let semcode = userSemester;
