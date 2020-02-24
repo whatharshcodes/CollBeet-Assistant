@@ -170,6 +170,12 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
    List All Tomorrow's Lectures
    ```
    
+**Specific Day Lecture Schedule**
+
+   ```
+   [Day Name] Lecture Schedule
+   ```
+   
 ---
 
 ### Mess Schedule
@@ -276,6 +282,36 @@ Following are all the phrases that can be used to interact with the CollBeet Ass
 ---
    
 ### College Info
+
+**H.O.D Details**
+
+   ```
+   Who is [Department Name] Head Of Department?
+   ```
+   
+**Your Fee Details**
+
+   ```
+   My Semester Fees
+   ```
+   
+**Department Fee Details**
+
+   ```
+   How much is [Department Name] Semester Fees?
+   ```
+   
+**All College Clubs**
+
+   ```
+   List all college clubs
+   ```
+   
+**Categorywise College Clubs**
+
+   ```
+   List all [Club Type] Clubs
+   ```
 
 **College Name**
 
