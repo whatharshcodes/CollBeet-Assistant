@@ -378,3 +378,7 @@ Following are the Actions using CollBeet:
 If you have an Action using CollBeet, why not showcase it to the world. You can make a Pull Request to add it to this table 👆
 
 ---
+
+<p align="center">Designed and Developed with :heart: by <a href="https://www.linkedin.com/in/prajvalraval/">Raval Prajval</a></p>
+
+----
